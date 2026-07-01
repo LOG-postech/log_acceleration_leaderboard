@@ -160,7 +160,18 @@ function renderModelTabs(el, models, active, onSelect) {
   el.querySelectorAll(".subtab").forEach((b) => b.addEventListener("click", () => onSelect(b.dataset.model)));
 }
 
-function boardSection(boardsEl, gpu, model, rows, cfg) {
+// Client-side GPU board order (mirrors runner/update_results.GPU_ORDER).
+const GPU_ORDER = ["A100", "PRO6000", "RTX3090"];
+function cmpGpu(a, b) {
+  const ia = GPU_ORDER.indexOf(a), ib = GPU_ORDER.indexOf(b);
+  const ra = ia === -1 ? GPU_ORDER.length : ia, rb = ib === -1 ? GPU_ORDER.length : ib;
+  return ra - rb || (a < b ? -1 : a > b ? 1 : 0);
+}
+
+// One board (GPU title + baseline note + table). With showRank the table is a
+// ranking (leaderboard); without it, it lists every run (submissions view).
+function boardSection(boardsEl, gpu, model, rows, cfg, opts) {
+  const showRank = !opts || opts.showRank !== false;
   const sec = document.createElement("section");
   sec.className = "board";
   const head = document.createElement("div");
@@ -172,7 +183,11 @@ function boardSection(boardsEl, gpu, model, rows, cfg) {
   const mount = document.createElement("div");
   sec.appendChild(mount);
   boardsEl.appendChild(sec);
-  renderTable(mount, rows || [], cfg, { showRank: true, showGpu: false, showModel: false, defaultSortKey: "rank", defaultAsc: true });
+  renderTable(mount, rows || [], cfg, {
+    showRank, showGpu: false, showModel: false,
+    defaultSortKey: showRank ? "rank" : "avg_speedup",
+    defaultAsc: showRank,
+  });
 }
 
 async function main() {
@@ -212,29 +227,30 @@ async function main() {
     return;
   }
 
-  // Submissions page: model sub-tabs + GPU filter over a flat table.
+  // Submissions page: model sub-tabs → per-GPU boards showing EVERY run
+  // (same look as the leaderboard, but no best-per-team dedup and no rank).
   const subsEl = document.getElementById("subs");
   if (!subsEl) return;
   const rowsAll = data.submissions || [];
   let activeModel = models[0] || null;
-  const gpuSel = document.getElementById("gpu-filter");
-  if (gpuSel) {
-    const gpus = Array.from(new Set(rowsAll.map((r) => r.gpu).filter(Boolean))).sort();
-    gpuSel.innerHTML = `<option value="">All GPUs</option>` + gpus.map((g) => `<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`).join("");
+  function draw() {
+    renderModelTabs(tabsEl, models, activeModel, (m) => { activeModel = m; draw(); });
+    const forModel = rowsAll.filter((r) => r.model === activeModel);
+    const byGpu = new Map();
+    for (const r of forModel) {
+      const g = r.gpu || "?";
+      if (!byGpu.has(g)) byGpu.set(g, []);
+      byGpu.get(g).push(r);
+    }
+    subsEl.innerHTML = "";
+    const gpus = Array.from(byGpu.keys()).sort(cmpGpu);
+    if (!gpus.length) {
+      subsEl.innerHTML = `<div class="empty">No submissions yet for ${escapeHtml(shortModel(activeModel || ""))}.</div>`;
+      return;
+    }
+    for (const g of gpus) boardSection(subsEl, g, activeModel, byGpu.get(g), cfg, { showRank: false });
   }
-  const handle = renderTable(subsEl, rowsAll, cfg, { showRank: false, showGpu: true, showModel: false, defaultSortKey: "avg_speedup", defaultAsc: false });
-  function refilter() {
-    let rows = rowsAll.slice();
-    if (activeModel) rows = rows.filter((r) => r.model === activeModel);
-    if (gpuSel && gpuSel.value) rows = rows.filter((r) => r.gpu === gpuSel.value);
-    handle.setRows(rows);
-  }
-  function drawTabs() {
-    renderModelTabs(tabsEl, models, activeModel, (m) => { activeModel = m; drawTabs(); refilter(); });
-  }
-  drawTabs();
-  if (gpuSel) gpuSel.addEventListener("change", refilter);
-  refilter();
+  draw();
 }
 
 main();
