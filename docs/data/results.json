@@ -94,6 +94,39 @@
           "notes": "Example row — different GPU, separate board."
         }
       ]
+    },
+    {
+      "gpu": "3090",
+      "model": "Qwen/Qwen3.5-4B",
+      "rows": [
+        {
+          "rank": 1,
+          "team": "team-sparse",
+          "submission_id": "sparse-2of4",
+          "display_name": "2:4 sparse (example)",
+          "submitter": "example",
+          "model": "Qwen/Qwen3.5-4B",
+          "gpu": "3090",
+          "image": "log-al/sparse-2of4:latest",
+          "date": "2026-07-01",
+          "example": true,
+          "latency": {
+            "short":  {"median_ms": 1200.0, "speedup": 1.8,  "num_runs": 50},
+            "medium": {"median_ms": 2400.0, "speedup": 1.8,  "num_runs": 50},
+            "long":   {"median_ms": 2950.0, "speedup": 1.75, "num_runs": 50}
+          },
+          "avg_speedup": 1.78,
+          "quality": {
+            "mmlu_pro":     {"score": null, "threshold": 0.621, "status": "pending"},
+            "ifeval":       {"score": null, "threshold": 0.814, "status": "pending"},
+            "gpqa_diamond": {"score": null, "threshold": 0.630, "status": "pending"}
+          },
+          "quality_status": "pending",
+          "valid": true,
+          "status": "ok",
+          "notes": "Example row — 3090 board."
+        }
+      ]
     }
   ],
   "submissions": [
@@ -124,6 +157,23 @@
         "long":   {"median_ms": 1750.0, "speedup": 2.0, "num_runs": 50}
       },
       "avg_speedup": 2.0,
+      "quality": {
+        "mmlu_pro":     {"score": null, "threshold": 0.621, "status": "pending"},
+        "ifeval":       {"score": null, "threshold": 0.814, "status": "pending"},
+        "gpqa_diamond": {"score": null, "threshold": 0.630, "status": "pending"}
+      },
+      "quality_status": "pending", "valid": true, "status": "ok", "notes": "Example row."
+    },
+    {
+      "team": "team-sparse", "submission_id": "sparse-2of4", "display_name": "2:4 sparse (example)",
+      "submitter": "example", "model": "Qwen/Qwen3.5-4B", "gpu": "3090", "image": "log-al/sparse-2of4:latest",
+      "date": "2026-07-01", "example": true,
+      "latency": {
+        "short":  {"median_ms": 1200.0, "speedup": 1.8,  "num_runs": 50},
+        "medium": {"median_ms": 2400.0, "speedup": 1.8,  "num_runs": 50},
+        "long":   {"median_ms": 2950.0, "speedup": 1.75, "num_runs": 50}
+      },
+      "avg_speedup": 1.78,
       "quality": {
         "mmlu_pro":     {"score": null, "threshold": 0.621, "status": "pending"},
         "ifeval":       {"score": null, "threshold": 0.814, "status": "pending"},

@@ -161,7 +161,7 @@ function renderModelTabs(el, models, active, onSelect) {
 }
 
 // Client-side GPU board order (mirrors runner/update_results.GPU_ORDER).
-const GPU_ORDER = ["A100", "PRO6000", "RTX3090"];
+const GPU_ORDER = ["A100", "PRO6000", "3090"];
 function cmpGpu(a, b) {
   const ia = GPU_ORDER.indexOf(a), ib = GPU_ORDER.indexOf(b);
   const ra = ia === -1 ? GPU_ORDER.length : ia, rb = ib === -1 ? GPU_ORDER.length : ib;

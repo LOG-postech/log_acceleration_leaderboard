@@ -18,7 +18,7 @@
     "Qwen/Qwen3.5-4B": {
       "A100":    {"short": null, "medium": null, "long": null},
       "PRO6000": {"short": null, "medium": null, "long": null},
-      "RTX3090": {"short": null, "medium": null, "long": null}
+      "3090":    {"short": null, "medium": null, "long": null}
     }
   },
   "quality_gates": {

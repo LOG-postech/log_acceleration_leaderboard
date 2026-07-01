@@ -33,7 +33,7 @@ def normalize_gpu(name: str) -> str:
     if "PRO 6000" in n or "PRO6000" in n or "RTX PRO 6000" in n:
         return "PRO6000"
     if "3090" in n:
-        return "RTX3090"
+        return "3090"
     if "A10G" in n or "A10" in n:
         return "A10G"
     if "H100" in n:

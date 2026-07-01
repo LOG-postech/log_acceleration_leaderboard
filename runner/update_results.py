@@ -30,7 +30,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import config as C  # noqa: E402
 
 # Board display order; unknown GPUs sort after these, alphabetically.
-GPU_ORDER = ["A100", "PRO6000", "RTX3090"]
+GPU_ORDER = ["A100", "PRO6000", "3090"]
 
 
 def _key(r: dict) -> str:
