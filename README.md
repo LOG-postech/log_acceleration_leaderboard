@@ -9,6 +9,8 @@ Modeled on the AdaptFM Efficient-Qwen competition board
 (<https://d1krc5fcnf73gi.cloudfront.net/>), but the numbers come from our
 own cluster.
 
+**🔗 Live board: <https://LOG-postech.github.io/log_acceleration_leaderboard/>**
+
 ```
 ┌─ submissions/<team>/submission.yaml   (points at a Docker image)
 │
@@ -46,6 +48,17 @@ Quality gates (MMLU-Pro ≥ 0.621, IFEval ≥ 0.814, GPQA-Diamond ≥ 0.630)
 are shown as ⏳ *pending* — they'll be evaluated later on a sampled subset
 (wire into [`runner/bench_quality.py`](runner/bench_quality.py)). A gate
 `fail` marks a submission invalid and drops it from the ranking.
+
+## The site
+
+Two views, both organized as **model sub-tab → per-GPU boards** (pick a
+model; each GPU gets its own board because baselines differ):
+
+- **Leaderboard** ([`index.html`](docs/index.html)) — best valid
+  submission per team, ranked within each (GPU, model) board.
+- **All submissions** ([`submissions.html`](docs/submissions.html)) —
+  every evaluated run (duplicates and quality-failed rows included,
+  no rank; failed rows are struck through).
 
 ## Quickstart
 
@@ -94,23 +107,26 @@ This stores the medians under `baselines[model][gpu]` in
 ## Publish on GitHub Pages
 
 This repo serves the site from the **`/docs` folder on `main`** — no CI
-needed. After pushing to GitHub:
+needed. Already enabled here; to reconfigure:
 
 1. Repo **Settings → Pages**
 2. **Source**: *Deploy from a branch*
 3. **Branch**: `main`, **Folder**: `/docs` → Save
 
-The board goes live at `https://<org>.github.io/<repo>/`. Every push that
-changes `docs/` redeploys it. (Prefer CI or a `gh-pages` branch? The site
-is plain static files under `docs/` — move them wherever your Pages setup
-expects.)
+Live at <https://LOG-postech.github.io/log_acceleration_leaderboard/>.
+Every push that changes `docs/` redeploys it (~1 min).
+
+> Free GitHub Pages requires the repo to be **public**. This repo is
+> public (code + result JSON only — no weights, images, or secrets; those
+> are `.gitignore`d). Switching it private disables Pages unless the org
+> has a paid plan.
 
 ## Layout
 
 ```
 docs/                 GitHub Pages root (static site)
-  index.html            leaderboard — one board per (GPU, model)
-  submissions.html      every evaluated run (flat; GPU + model filters)
+  index.html            leaderboard — model sub-tabs → per-GPU boards (ranked)
+  submissions.html      all runs — model sub-tabs → per-GPU boards (no rank)
   assets/{app.js,style.css}
   data/config.json      SOURCE OF TRUTH: baselines[model][gpu], thresholds, models
   data/results.json     rendered data: groups (boards) + submissions (regenerated)
