@@ -1,0 +1,12 @@
+# Dense unoptimized reference. Run with `--baseline` to calibrate a GPU:
+#   python runner/eval_submission.py submissions/baseline/dense.yaml --baseline
+team: baseline
+submission_id: dense-bf16
+display_name: "Dense bf16 (reference)"
+submitter: log-team
+model: Qwen/Qwen3.5-4B
+image: log-al/dense-bf16:latest
+# image_tar: /home/shared/submissions/baseline/image.tar.gz
+port: 8080
+startup_timeout_s: 900
+notes: "unoptimized Qwen3.5-4B baseline — defines speedup=1.0 for its GPU"

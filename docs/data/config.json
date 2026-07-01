@@ -1,0 +1,36 @@
+{
+  "title": "LOG Acceleration Leaderboard",
+  "subtitle": "Internal inference-acceleration leaderboard — per-GPU boards on the LOG cluster",
+  "model": "Qwen/Qwen3.5-4B",
+  "models": ["Qwen/Qwen3.5-4B"],
+  "rank_metric": "avg_speedup",
+  "latency": {
+    "warmup_runs": 5,
+    "measure_runs": 50,
+    "categories": {
+      "short":  {"prompt_tokens": 64,   "output_tokens": 128, "label": "Short"},
+      "medium": {"prompt_tokens": 2048, "output_tokens": 256, "label": "Medium"},
+      "long":   {"prompt_tokens": 8192, "output_tokens": 256, "label": "Long"}
+    }
+  },
+  "baselines": {
+    "_comment": "Nested baselines[model][gpu] = dense-baseline median latency (ms) per category. speedup = baseline/median, comparable ONLY within a fixed (model, GPU) — that is why the leaderboard shows a separate board per (GPU, model). null = not calibrated yet (speedup shows as —); calibrate by running that model's dense image with `eval_submission.py <dense.yaml> --baseline`. AdaptFM EQC A10G reference for Qwen3.5-4B was short 2582 / medium 5441 / long 6576.",
+    "Qwen/Qwen3.5-4B": {
+      "A100":    {"short": null, "medium": null, "long": null},
+      "PRO6000": {"short": null, "medium": null, "long": null},
+      "RTX3090": {"short": null, "medium": null, "long": null}
+    }
+  },
+  "quality_gates": {
+    "_comment": "Hard gates. A submission failing ANY gate is invalid (excluded from ranking). Scores pending until sampling-based quality eval is run.",
+    "mmlu_pro":     {"label": "MMLU-Pro",     "threshold": 0.621, "mode": "chat, thinking OFF, max_tok 512"},
+    "ifeval":       {"label": "IFEval",       "threshold": 0.814, "mode": "chat, thinking OFF, max_tok 512"},
+    "gpqa_diamond": {"label": "GPQA-Diamond", "threshold": 0.630, "mode": "chat, thinking ON + streaming, max_tok 12288"}
+  },
+  "endpoints": {
+    "port": 8080,
+    "health": "/ping",
+    "latency": "/v1/completions",
+    "quality": "/v1/chat/completions"
+  }
+}

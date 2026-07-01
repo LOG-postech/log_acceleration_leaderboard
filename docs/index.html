@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LOG Acceleration Leaderboard</title>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <h1 data-cfg-title>LOG Acceleration Leaderboard</h1>
+      <p data-cfg-subtitle></p>
+      <nav class="tabs">
+        <a href="./index.html" class="active">Leaderboard</a>
+        <a href="./submissions.html">All submissions</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- model selector: pick a model, see its per-GPU boards -->
+    <div class="subtabs" id="model-tabs"></div>
+
+    <div class="toolbar">
+      <div class="spacer"></div>
+      <div class="updated" id="updated"></div>
+    </div>
+
+    <!-- one independently-ranked board per GPU (for the active model) -->
+    <div id="boards"></div>
+
+    <div class="legend">
+      <span><b>A separate board per GPU × model</b> — baselines differ, so speedups are only comparable inside a board.</span>
+      <span><b>Avg Speedup</b> = mean of per-category speedup (baseline&nbsp;/&nbsp;median), best valid submission per team.</span>
+      <span><b>✅</b> gate pass &nbsp; <b>❌</b> gate fail (invalid) &nbsp; <b>⏳</b> quality pending</span>
+    </div>
+
+    <div class="footer">
+      <p>Ranking metric: mean latency speedup vs. the dense baseline across Short / Medium / Long, gated by quality.
+         Data regenerated after each cluster evaluation. See <a href="./submissions.html">all submissions</a>.</p>
+    </div>
+  </main>
+
+  <script src="./assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Docker images / model weights — never commit
+*.tar.gz
+*.tar
+build/
+models/
+weights/
+
+# Raw per-run eval outputs (merged into docs/data/results.json before commit)
+results/*.json
+!results/.gitkeep
+
+# Local / editor
+.DS_Store
+*.log
+.idea/
+.vscode/

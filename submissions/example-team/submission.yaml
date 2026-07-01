@@ -1,0 +1,20 @@
+# Submission manifest — one YAML per submission.
+# Copy this folder to submissions/<your-team>/ and edit.
+
+team: example-team                 # required — appears as the "Team" on the board
+submission_id: dense-bf16         # required — unique per team (used for the result filename)
+display_name: "Dense bf16 (vLLM)" # shown under the team name
+submitter: your-name              # required-ish — who submitted this
+model: Qwen/Qwen3.5-4B            # model this engine serves (baselines & boards are per model)
+
+# --- the engine: an EQC-style Docker image serving port 8080 ---
+# Provide `image` (a docker tag to run). Optionally `image_tar` to
+# `docker load` an image.tar.gz first before running that tag.
+image: log-al/dense-bf16:latest
+image_tar: /home/shared/submissions/example-team/image.tar.gz   # optional
+
+# --- optional overrides ---
+port: 8080                        # container port (default 8080)
+startup_timeout_s: 900            # seconds to wait for GET /ping == 200
+notes: "unoptimized reference"
+# docker_args: ["--shm-size=8g"]  # extra args passed to `docker run`

@@ -1,0 +1,9 @@
+# Runner deps (control-plane only — the heavy inference stack lives inside
+# each submission's Docker image, not here).
+PyYAML>=6.0
+
+# Latency + results merging use only the Python standard library
+# (urllib, json, statistics), so nothing else is required for the MVP.
+
+# For the sampling-based quality gates (later), add e.g.:
+# lm-eval>=0.4.5

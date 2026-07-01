@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>All submissions — LOG Acceleration Leaderboard</title>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <h1 data-cfg-title>LOG Acceleration Leaderboard</h1>
+      <p data-cfg-subtitle></p>
+      <nav class="tabs">
+        <a href="./index.html">Leaderboard</a>
+        <a href="./submissions.html" class="active">All submissions</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- model selector (sub-tabs) -->
+    <div class="subtabs" id="model-tabs"></div>
+
+    <div class="toolbar">
+      <label for="gpu-filter">GPU</label>
+      <select id="gpu-filter"></select>
+      <div class="spacer"></div>
+      <div class="updated" id="updated"></div>
+    </div>
+
+    <!-- flat table of every evaluated run (GPU + Model columns, filterable) -->
+    <div id="subs"></div>
+
+    <div class="legend">
+      <span>Every evaluated submission (not just the best per team). Click a column header to sort.</span>
+      <span><b>✅</b> gate pass &nbsp; <b>❌</b> gate fail (invalid) &nbsp; <b>⏳</b> quality pending</span>
+      <span>Speedup is only comparable within the same <b>GPU × model</b>.</span>
+    </div>
+
+    <div class="footer">
+      <p><a href="./index.html">&larr; Back to leaderboard</a></p>
+    </div>
+  </main>
+
+  <script src="./assets/app.js"></script>
+</body>
+</html>
