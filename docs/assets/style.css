@@ -7,6 +7,8 @@
   --muted: #8b98a9;
   --accent: #4c9aff;
   --accent-2: #7c5cff;
+  --accent-soft: #4c9aff1a;
+  --accent-border: #4c9aff55;
   --good: #3fb950;
   --bad: #f85149;
   --pending: #d29922;
@@ -14,6 +16,50 @@
   --gold: #e3b341;
   --silver: #adbac7;
   --bronze: #cd7f32;
+}
+
+/* Light palette — applied when the user picks light, or when the OS prefers
+   light and no explicit choice is stored. */
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --panel: #f6f8fa;
+  --panel-2: #eaeef2;
+  --border: #d0d7de;
+  --text: #1f2328;
+  --muted: #656d76;
+  --accent: #0969da;
+  --accent-2: #8250df;
+  --accent-soft: #0969da14;
+  --accent-border: #0969da66;
+  --good: #1a7f37;
+  --bad: #cf222e;
+  --pending: #9a6700;
+  --row-hover: #f3f4f6;
+  --gold: #9a6700;
+  --silver: #6e7781;
+  --bronze: #a0522d;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg: #ffffff;
+    --panel: #f6f8fa;
+    --panel-2: #eaeef2;
+    --border: #d0d7de;
+    --text: #1f2328;
+    --muted: #656d76;
+    --accent: #0969da;
+    --accent-2: #8250df;
+    --accent-soft: #0969da14;
+    --accent-border: #0969da66;
+    --good: #1a7f37;
+    --bad: #cf222e;
+    --pending: #9a6700;
+    --row-hover: #f3f4f6;
+    --gold: #9a6700;
+    --silver: #6e7781;
+    --bronze: #a0522d;
+  }
 }
 
 * { box-sizing: border-box; }
@@ -31,7 +77,7 @@ body {
 
 header.hero {
   border-bottom: 1px solid var(--border);
-  background: linear-gradient(180deg, #12182080, transparent);
+  background: linear-gradient(180deg, var(--panel), transparent);
 }
 .hero-inner { max-width: 1180px; margin: 0 auto; padding: 26px 20px 18px; }
 .hero h1 {
@@ -87,6 +133,17 @@ nav.tabs a:hover { color: var(--text); }
 }
 .toolbar .spacer { flex: 1; }
 .toolbar .updated { color: var(--muted); font-size: 12px; }
+.theme-toggle {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 5px 9px;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+.theme-toggle:hover { border-color: var(--accent-border); }
 
 .table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; }
 table { width: 100%; border-collapse: collapse; min-width: 860px; }
@@ -174,7 +231,7 @@ tbody tr.invalid .team-name { text-decoration: line-through; }
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 .subtab:hover { color: var(--text); }
-.subtab.active { color: var(--text); background: #4c9aff1a; border-color: #4c9aff55; }
+.subtab.active { color: var(--text); background: var(--accent-soft); border-color: var(--accent-border); }
 
 .board { margin-top: 30px; }
 .board:first-of-type { margin-top: 6px; }

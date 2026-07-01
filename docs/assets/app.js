@@ -190,7 +190,31 @@ function boardSection(boardsEl, gpu, model, rows, cfg, opts) {
   });
 }
 
+function currentTheme() {
+  const explicit = document.documentElement.getAttribute("data-theme");
+  if (explicit) return explicit;
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}
+
+function setupTheme() {
+  const btn = document.getElementById("theme-toggle");
+  if (!btn) return;
+  const render = () => {
+    const dark = currentTheme() === "dark";
+    btn.textContent = dark ? "☀️" : "🌙";
+    btn.title = "Switch to " + (dark ? "light" : "dark") + " mode";
+  };
+  render();
+  btn.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("theme", next); } catch (e) {}
+    render();
+  });
+}
+
 async function main() {
+  setupTheme();
   let cfg, data;
   try {
     [cfg, data] = await Promise.all([loadJSON(`${DATA_DIR}/config.json`), loadJSON(`${DATA_DIR}/results.json`)]);

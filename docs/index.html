@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LOG Acceleration Leaderboard</title>
   <link rel="stylesheet" href="./assets/style.css" />
+  <script>
+    // Apply stored theme before first paint to avoid a flash.
+    (function () { try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {} })();
+  </script>
 </head>
 <body>
   <header class="hero">
@@ -25,6 +29,7 @@
     <div class="toolbar">
       <div class="spacer"></div>
       <div class="updated" id="updated"></div>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle color theme">🌙</button>
     </div>
 
     <!-- one independently-ranked board per GPU (for the active model) -->
